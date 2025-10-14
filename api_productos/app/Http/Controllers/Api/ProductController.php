@@ -1,0 +1,44 @@
+<?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Controller;
+use App\Models\Product;
+use App\Http\Requests\StoreProductRequest;
+use App\Http\Requests\UpdateProductRequest;
+use App\Http\Resources\ProductResource;
+
+class ProductController extends Controller
+{
+    public function index()
+    {
+        $products = Product::all();
+        return ProductResource::collection($products);
+    }
+
+    public function store(StoreProductRequest $request)
+    {
+        $product = Product::create($request->validated());
+        return new ProductResource($product);
+    }
+
+    public function show($id)
+    {
+        $product = Product::findOrFail($id);
+        return new ProductResource($product);
+    }
+
+    public function update(UpdateProductRequest $request, $id)
+    {
+        $product = Product::findOrFail($id);
+        $product->update($request->validated());
+        return new ProductResource($product);
+    }
+
+    public function destroy($id)
+    {
+        $product = Product::findOrFail($id);
+        $product->delete();
+        return response()->json(null, 204);
+    }
+}

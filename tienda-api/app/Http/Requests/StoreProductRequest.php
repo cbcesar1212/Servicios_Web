@@ -8,10 +8,8 @@ class StoreProductRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return false;
     }
@@ -21,10 +19,15 @@ class StoreProductRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'sku' => 'required|string|max:255',
+            'stock' => 'required|numeric',
+            'price' => 'required|integer',
+            'is_active' => 'nullable|boolean',
         ];
     }
 }

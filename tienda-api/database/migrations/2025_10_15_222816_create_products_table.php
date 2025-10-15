@@ -16,9 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->string('sku')->unique();
-            $table->unsignedInteger('stock')->default(0);
+            $table->unsignedBigInteger('stock')->default(0);
             $table->decimal('price', 10, 2);
-            $table->boolean('price', 10, 2);
             $table->boolean('is_active')->default(true);
             $table->softDeletes();
             $table->timestamps();

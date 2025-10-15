@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
@@ -17,25 +17,24 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::all();
-        return ProductResource::collection($products);
+        return response()->json($products);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreProductRequest $request)
     {
         $product = Product::create($request->validated());
-        return new ProductResource($product);
+        return response()->json($product, 201);
     }
-
     /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
         $product = Product::findOrFail($id);
-        return new ProductResource($product);
+        return response()->json($product);
     }
 
     /**
@@ -45,7 +44,7 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
         $product->update($request->validated());
-        return new ProductResource($product);
+        return response()->json($product);
     }
 
     /**
